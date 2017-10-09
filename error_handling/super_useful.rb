@@ -1,6 +1,14 @@
+class CoffeeError < StandardError
+end
+
 # PHASE 2
 def convert_to_int(str)
-  Integer(str)
+  begin
+    Integer(str)
+  rescue ArgumentError
+    puts "Invalid input!"
+    return nil
+  end
 end
 
 # PHASE 3
@@ -9,25 +17,41 @@ FRUITS = ["apple", "banana", "orange"]
 def reaction(maybe_fruit)
   if FRUITS.include? maybe_fruit
     puts "OMG, thanks so much for the #{maybe_fruit}!"
-  else 
-    raise StandardError 
-  end 
+  else
+    if maybe_fruit == "coffee"
+      raise CoffeeError
+    else
+      raise StandardError
+    end
+  end
 end
 
 def feed_me_a_fruit
   puts "Hello, I am a friendly monster. :)"
-
-  puts "Feed me a fruit! (Enter the name of a fruit:)"
-  maybe_fruit = gets.chomp
-  reaction(maybe_fruit) 
-end  
-
+  begin
+    puts "Feed me a fruit! (Enter the name of a fruit:)"
+    maybe_fruit = gets.chomp
+    reaction(maybe_fruit)
+  rescue CoffeeError
+    puts "Coffee! Try again!"
+    retry
+  rescue StandardError
+    puts "Not a fruit!"
+  end
+end
+class YearError < StandardError; end
+class NameError < StandardError; end
+class PastimeError < StandardError; end
 # PHASE 4
 class BestFriend
+  attr_reader :name, :fav_pastime
   def initialize(name, yrs_known, fav_pastime)
     @name = name
     @yrs_known = yrs_known
     @fav_pastime = fav_pastime
+    raise YearError if @yrs_known < 5
+    raise NameError if @name.length <= 0
+    raise PastimeError if @fav_pastime.length <= 0
   end
 
   def talk_about_friendship
@@ -39,8 +63,6 @@ class BestFriend
   end
 
   def give_friendship_bracelet
-    puts "Hey bestie, I made you a friendship bracelet. It says my name, #{@name}, so you never forget me." 
+    puts "Hey bestie, I made you a friendship bracelet. It says my name, #{@name}, so you never forget me."
   end
 end
-
-
