@@ -1,0 +1,24 @@
+/* PUT FLUID GRID CODE HERE */
+
+aside {
+  display: inline-block;
+}
+
+section {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.col {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.col-1-5 {
+  width: calc(20% - 15px);
+  padding-right: 40px;
+}
+
+.col-4-5 {
+  width: 80%;
+}
