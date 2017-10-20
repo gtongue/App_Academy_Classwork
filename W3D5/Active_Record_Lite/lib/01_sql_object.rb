@@ -19,7 +19,7 @@ class SQLObject
 
   def self.finalize!
     columns.each do |name|
-      define_method(name) { self.attributes[name] }
+      define_method(name) {self.attributes[name]}
       define_method("#{name}=") { |val| self.attributes[name] = val }      
     end
   end
@@ -118,3 +118,13 @@ class SQLObject
     id.nil? ? insert : update
   end
 end
+
+class Human < SQLObject
+  self.table_name = 'humans'
+
+  self.finalize!
+end
+
+h = Human.find(1)
+
+puts h.id
