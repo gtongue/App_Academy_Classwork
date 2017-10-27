@@ -17,11 +17,31 @@ class User < ApplicationRecord
 
   after_initialize :ensure_session_token
 
+  has_many :cats,
+    foreign_key: :user_id,
+    class_name: :Cat
+
+  has_many :requests,
+    foreign_key: :user_id,
+    class_name: :CatRentalRequest
+
+  has_many :session_tokens,
+    primary_key: :id,
+    foreign_key: :user_id,
+    class_name: :SessionToken
+
   attr_reader :password
+  attr_reader :session_token
 
   def password=(password)
     @password = password
     self.password_digest = BCrypt::Password.create(password)
+  end
+
+  # Adds session token to :session_token joins table
+  def session_token=(session_token)
+    @session_token = session_token
+
   end
 
   def valid_password?(password)
@@ -30,13 +50,7 @@ class User < ApplicationRecord
   end
 
   def ensure_session_token
-    self.session_token ||= SecureRandom::urlsafe_base64
-  end
-
-  def reset_session_token!
-    self.session_token = SecureRandom::urlsafe_base64
-    self.save
-    self.session_token
+    @session_token ||= SecureRandom::urlsafe_base64
   end
 
   def self.find_by_credentials(username, password)

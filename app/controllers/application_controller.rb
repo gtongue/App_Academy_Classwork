@@ -4,7 +4,9 @@ class ApplicationController < ActionController::Base
 
   def current_user
     return nil unless session[:session_token]
-    @current_user ||= User.find_by(session_token: session[:session_token])
+    tocken = SessionToken.find_by(session[:session_token])
+    return nil if tocken.nil?
+    @current_user ||= User.find(tocken.id)
   end
 
   def logged_in?
@@ -13,11 +15,13 @@ class ApplicationController < ActionController::Base
 
   def login!(user)
     session[:session_token] = user.session_token
+    SessionToken.create(user_id: user.id, session_token: user.session_token)
   end
 
   def logout!
-    current_user.reset_session_token!
+    session_token = SessionToken.find_by(user_id: current_user.id).where(session_token: current_user.session_token)
     session[:session_token] = nil
+    session_token.destroy
   end
 
   def require_logged_in
