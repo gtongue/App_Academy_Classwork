@@ -9,6 +9,7 @@
 #  status     :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  user_id    :integer          not null
 #
 
 class CatRentalRequest < ApplicationRecord
@@ -19,10 +20,17 @@ class CatRentalRequest < ApplicationRecord
   # belongs_to associations, so we can leave the validation of cat out here.
   validates :end_date, :start_date, :status, presence: true
   validates :status, inclusion: STATUS_STATES
+  validates :user_id, presence: true
+
   validate :start_must_come_before_end
   validate :does_not_overlap_approved_request
 
+
   belongs_to :cat
+
+  belongs_to :requester,
+    foreign_key: :user_id,
+    class_name: :User
 
   after_initialize :assign_pending_status
 
