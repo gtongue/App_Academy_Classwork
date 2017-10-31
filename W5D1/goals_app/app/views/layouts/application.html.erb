@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GoalsApp</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body>
+    <% if current_user %>
+      <h1> <%= current_user.username %> </h1>
+      <p>Log Out</p>
+      <%= button_to 'Log Out', session_url ,method: :delete %>
+    <% else %>Sign In
+      <%= button_to 'Sign In', new_session_url , method: :get %>
+      Sign Up
+      <%= button_to 'Sign Up', new_user_url , method: :get %>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>
