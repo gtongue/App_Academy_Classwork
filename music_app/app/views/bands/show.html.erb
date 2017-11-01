@@ -1,0 +1,18 @@
+<h1>
+    <%= @band.name %>
+</h1>
+
+<ul>
+    <% @band.albums.each do |album|%>
+        <li>
+            <%= album.title %> : <%= album.year %>
+            <% if album.live %>
+                <strong>LIVE</strong>
+            <% end%>
+        </li>
+    <% end %>
+</ul>    
+<br>
+
+<%= button_to  "Add new album", new_band_album_url(@band.id), method: :get %>
+<%= button_to  "Back", bands_url, method: :get %>
