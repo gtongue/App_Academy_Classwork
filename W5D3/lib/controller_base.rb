@@ -2,6 +2,8 @@ require 'active_support'
 require 'active_support/core_ext'
 require 'erb'
 require_relative './session'
+require_relative './flash'
+require 'byebug'
 
 class ControllerBase
   attr_reader :req, :res, :params
@@ -24,7 +26,9 @@ class ControllerBase
     raise "double error" if @already_built_response    
     @res.status = 302
     @res.location = url
-    session.store_session(@res)    
+    session.store_session(@res)   
+    p flash
+    flash.store_flash(@res)            
     @already_built_response = true 
   end
 
@@ -35,7 +39,9 @@ class ControllerBase
     raise "double error" if @already_built_response
     @res['Content-Type'] = content_type
     @res.write(content)
+    p flash    
     session.store_session(@res)
+    flash.store_flash(@res)  
     @already_built_response = true
   end
 
@@ -45,12 +51,17 @@ class ControllerBase
     path = File.path("views/" + self.class.name.underscore + "/" + template_name.to_s + ".html.erb")
     contents = File.read(path)
     erb = ERB.new(contents)
+    p flash    
     render_content(erb.result(binding), "text/html")
   end
 
   # method exposing a `Session` object
   def session
     @session ||= Session.new(@req)    
+  end
+
+  def flash
+    @flash ||= Flash.new(@req)
   end
 
   # use this with the router to call action_name (:index, :show, :create...)
