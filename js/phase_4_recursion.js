@@ -93,20 +93,6 @@ const mergesort = function mergesort(arr) {
   return merge(sortedLeft, sortedRight);
 };
 
-// const subsets = function subsets(arr){
-//   if (arr.length === 0) {
-//     return arr;
-//   }
-//   let first = arr[0];
-//
-//   let subs = arr.slice(1).map( function (el) {
-//     console.log(el);
-//     return [first].concat(el);
-//   });
-//   subs = subs.concat([arr]);
-//   return subs.concat(subsets(arr.slice(1)));
-// };
-
 const subsets = function subsets(arr) {
   if (arr.length === 0) {
     return [arr];
