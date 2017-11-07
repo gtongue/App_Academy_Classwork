@@ -1,0 +1,32 @@
+/* PHASE 5: Cats */
+.content-header {
+  position: relative;
+  height: 200px;
+  width: 100%;
+  background-image: url('https://wallpaperscraft.com/image/park_lawn_grass_trees_sun_15215_1920x1080.jpg');
+  background-size: cover;
+}
+
+.header-name {
+  color: white;
+  font-size: 40px;
+  position: absolute;
+  left: 240px;
+  bottom: 20px;
+  font-weight: 200;
+}
+
+.header-button {
+  position: absolute;
+  background-color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: 700;
+  border: 1px solid black;
+  right: 20px;
+  bottom: 20px;
+}
+
+.header-button:hover{
+  background-color: #eee;
+}
