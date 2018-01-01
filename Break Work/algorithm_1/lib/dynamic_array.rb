@@ -72,7 +72,8 @@ class DynamicArray
 
   # O(n): has to shift over all the elements.
   def unshift(val)
-    resize! if @length+1 >= @store.length
+    p @store
+    resize! if @length == @store.length
     i = @length
     until i == 0
       self[i] = self[i-1]
