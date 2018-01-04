@@ -4,14 +4,21 @@ class RingBuffer
   attr_reader :length
 
   def initialize
+    @store = StaticArray.new(8)
+    @length = 0;
+    @start_idx = 0;
   end
 
   # O(1)
-  def [](index)
+  def [](i)
+    raise "index out of bounds" if i > @length - 1
+    i = i + @length if i < 0
+    raise "index out of bounds" if  i < 0
+    @store[i]
   end
 
   # O(1)
-  def []=(index, val)
+  def []=(i, val)
   end
 
   # O(1)
@@ -20,6 +27,7 @@ class RingBuffer
 
   # O(1) ammortized
   def push(val)
+
   end
 
   # O(1)
@@ -33,9 +41,6 @@ class RingBuffer
   protected
   attr_accessor :capacity, :start_idx, :store
   attr_writer :length
-
-  def check_index(index)
-  end
 
   def resize!
   end

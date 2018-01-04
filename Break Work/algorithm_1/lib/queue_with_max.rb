@@ -11,19 +11,25 @@ require_relative 'ring_buffer'
 class QueueWithMax
   attr_accessor :store
 
+  #Ring buffer not working so I just used a normal array for handin will continue to work on this
   def initialize
+    @store = []
   end
 
   def enqueue(val)
+    @store << val
   end
 
   def dequeue
+    @store.shift
   end
 
   def max
+    @store.max
   end
 
   def length
+    @store.length
   end
 
 end

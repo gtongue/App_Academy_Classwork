@@ -72,7 +72,6 @@ class DynamicArray
 
   # O(n): has to shift over all the elements.
   def unshift(val)
-    p @store
     resize! if @length == @store.length
     i = @length
     until i == 0
@@ -80,7 +79,6 @@ class DynamicArray
       i -= 1
     end
     self[0] = val
-    @length += 1
     val
   end
 
@@ -88,12 +86,10 @@ class DynamicArray
   attr_accessor :capacity, :store
   attr_writer :length
 
-  def check_index(index)
-  end
-
   def capacity
     @store.length
   end
+
   # O(n): has to copy over all the elements to the new store.
   def resize!
     new_array = StaticArray.new(@store.length * 2)
