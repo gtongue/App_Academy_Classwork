@@ -59,7 +59,6 @@ class BinarySearchTree
         node.parent.left = node.left
       end
     else
-      debugger
       maximum = maximum(node.left)
       maximum.parent.right = nil
       maximum.parent = node.parent
@@ -84,12 +83,27 @@ class BinarySearchTree
   end
 
   def depth(tree_node = @root)
+    return depth_recursively(tree_node)
   end 
 
   def is_balanced?(tree_node = @root)
+    left = depth(tree_node.left)
+    right = depth(tree_node.right)
+    balanced = (left - right).abs < 2
+    if !balanced
+      return balanced
+    else
+      balanced = is_balanced?(tree_node.left) if tree_node.left
+      balanced = balanced && is_balanced?(tree_node.right) if tree_node.right
+    end
+    balanced
   end
 
   def in_order_traversal(tree_node = @root, arr = [])
+    in_order_traversal(tree_node.left, arr) if tree_node.left
+    arr.push(tree_node.value)
+    in_order_traversal(tree_node.right, arr) if tree_node.right
+    arr
   end
 
 
@@ -112,6 +126,27 @@ class BinarySearchTree
           return tree_node
         end
       end
+    end
+  end
+
+  def depth_recursively(tree_node = @root, current_depth = 0)
+    return current_depth if tree_node == nil 
+    if !tree_node.left && !tree_node.right
+      return current_depth
+    end
+    current_depth += 1
+    depth_left = current_depth;
+    depth_right = current_depth;
+    if tree_node.left
+      depth_left = depth_recursively(tree_node.left, current_depth)
+    end
+    if tree_node.right
+      depth_right = depth_recursively(tree_node.right, current_depth)
+    end
+    if depth_left > depth_right
+      return depth_left
+    else
+      return depth_right
     end
   end
 end
