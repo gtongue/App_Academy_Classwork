@@ -4,7 +4,7 @@ require 'byebug'
 # Implementing topological sort using both Khan's and Tarian's algorithms
 
 # Khan's
-def topological_sort_khan(vertices)
+def topological_sort(vertices)
   result = []
   queue = []
   in_edges_lengths = hash_in_edges(vertices)
@@ -12,7 +12,7 @@ def topological_sort_khan(vertices)
     if vertex.in_edges.empty?
       queue << vertex
     end
-  end
+  end  
   until queue.empty?
     vertex = queue.shift
     result << vertex
@@ -29,7 +29,7 @@ def topological_sort_khan(vertices)
 end
 
 #Tarjan's my cyclical solution is inefficient
-def topological_sort(vertices)
+def topological_sort_tarjan(vertices)
   result = []
   visited = Hash.new(false)
   initial_verts = []

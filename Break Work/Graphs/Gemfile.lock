@@ -18,6 +18,7 @@ GEM
     rspec-support (3.7.0)
 
 PLATFORMS
+  ruby
   x86-mingw32
 
 DEPENDENCIES
