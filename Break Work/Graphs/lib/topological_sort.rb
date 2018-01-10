@@ -79,3 +79,4 @@ def check_cycle(in_edges_lengths)
   end
   return false
 end
+
